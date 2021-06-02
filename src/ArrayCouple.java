@@ -1,34 +1,20 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ArrayCouple {
-    private Set<Pair> setWithPair;
-    private Set<Pair> setWithoutPair;
+    private Set<Pair> setWithoutReversedPair;
 
-    public ArrayCouple() {
-        this.setWithPair = new HashSet<>();
-        this.setWithoutPair = new LinkedHashSet<>();
-    }
     public String arrayChallenge(int[] arr) {
+        Set<Pair> pairSet = new LinkedHashSet<>();
         for (int i = 0; i < arr.length; i += 2) {
-            boolean hasPair = false;
-            if (setWithPair.contains(new Pair(arr[i],arr[i + 1]))) {
-                continue;
-            }
-            Pair newPair = new Pair(arr[i], arr[i +1]);
-            setWithPair.add(newPair);
-            for (int j = i + 2; j < arr.length; j += 2) {
-                if (newPair.getX() == arr[j + 1] && newPair.getY() == arr[j])  {
-                    setWithPair.add(new Pair(arr[j], arr[j + 1]));
-                    hasPair = true;
-                }
-            }
-            if (!hasPair) {
-                setWithPair.remove(newPair);
-                setWithoutPair.add(newPair);
-            }
+            pairSet.add(new Pair(arr[i], arr[i + 1]));
         }
 
-        return setWithoutPair.isEmpty() ? "yes" : buildStringFromSet(setWithoutPair);
+        setWithoutReversedPair = pairSet.stream()
+                 .filter(pair -> !pairSet.contains(new Pair(pair.getY(), pair.getX())) || pair.getX() == pair.getY())
+                 .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        return setWithoutReversedPair.isEmpty() ? "yes" : buildStringFromSet(setWithoutReversedPair);
     }
 
     private String buildStringFromSet(Set<Pair> set) {
