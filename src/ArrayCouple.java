@@ -9,7 +9,8 @@ public class ArrayCouple {
         for (int i = 0; i < arr.length; i += 2) {
             pairSet.add(new Pair(arr[i], arr[i + 1]));
         }
-
+        //filtering data by checking if the pair has its reversed copy
+        // or fields in pair are equals
         setWithoutReversedPair = pairSet.stream()
                  .filter(pair -> !pairSet.contains(new Pair(pair.getY(), pair.getX())) || pair.getX() == pair.getY())
                  .collect(Collectors.toCollection(LinkedHashSet::new));
