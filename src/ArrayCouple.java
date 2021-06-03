@@ -2,7 +2,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ArrayCouple {
-    private Set<Pair> setWithoutReversedPair;
 
     public String arrayChallenge(int[] arr) {
         Set<Pair> pairSet = new LinkedHashSet<>();
@@ -11,9 +10,9 @@ public class ArrayCouple {
         }
         //filtering data by checking if the pair has its reversed copy
         // or fields in pair are equals
-        setWithoutReversedPair = pairSet.stream()
-                 .filter(pair -> !pairSet.contains(new Pair(pair.getY(), pair.getX())) || pair.getX() == pair.getY())
-                 .collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<Pair> setWithoutReversedPair = pairSet.stream()
+                                                  .filter(pair -> !pairSet.contains(new Pair(pair.getY(), pair.getX())) || pair.getX() == pair.getY())
+                                                  .collect(Collectors.toCollection(LinkedHashSet::new));
 
         return setWithoutReversedPair.isEmpty() ? "yes" : buildStringFromSet(setWithoutReversedPair);
     }
