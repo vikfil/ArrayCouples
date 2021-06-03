@@ -1,3 +1,5 @@
+package com.viktor;
+
 import java.util.Objects;
 
 public class Pair {
